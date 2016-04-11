@@ -70,3 +70,66 @@ int main(int argc, char **argv)
 	return 0;
 
 }
+
+
+
+
+
+
+
+
+
+dim3 block(1, 1, 1);
+
+dim3 grid(W / block.x, H / block.y, 1);
+
+simple_kernel << < grid, block >> >(yuv, W, H, impl->t);
+
+
+__global__ void simple_kernel
+
+(uint8_t *pos, unsigned int width, unsigned int height, float time)
+
+{
+
+unsigned int x = blockIdx.x*blockDim.x + threadIdx.x;
+
+unsigned int y = blockIdx.y*blockDim.y + threadIdx.y;
+
+pos[y*width + x] = (uint8_t)(x) *(int)time % 256;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
